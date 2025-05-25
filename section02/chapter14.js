@@ -1,24 +1,27 @@
-// 스코프(Scope)
-// 우리 말로 범위.
-// 변수나 함수에 접근하거나 호출 할 수 있는 범위를 말함
+// 비동기 작업 처리하기 3. async / await
 
-// 전역(전체영역) 스코프 / 지역 스코프
-// 전역 스코프 : 전체 영역에서 접근 가능
-// 지역 스코프 : 특정 영역에서만 접근 가능
+// async
+// 함수 앞에 붙이는 키워드로서 어떤 함수를 비동기 함수로 만들어주는 키워드
+// 함수가 프로미스를 반환하도록 변환 해주는 그런 키워드
 
-let a = 1; // 전역 스코프
-function funcA(){
-    let b = 2; // 지역 스코프
-    console.log(a);
+async function getData() {
+    return{
+        name : "박정하",
+        id : "winterlood",
+    }
 }
-funcA();
-// console.log(b); // b is not defiend 라고 에러 발생
+// async를 붙여주면 비동기 함수로 바뀐다. 객체를 그대로 반환하는 함수가 아니라 
+// 이 객체를 결과값으로 갖는 새로운 프로미스를 봔환하는 함수로 변환한다는 것.
 
-if(true) {
-    let c = 1;
+//console.log(getData());
+
+// async는 await 와 함께 사용 할 때 효과가 좋다.
+// await
+// async 함수 내부에서만 사용이 가능한 키워드
+// 비동기 함수가 다 처리되길 기다리는 역할
+
+async function printData() {
+   const data = await getData();
+   console.log(data);
 }
-for(let i = 0; i < 10; i++) {
-    let d = 1;
-}
-// 블록 내에 선언된 모든 변수는 지역스코프를 가짐.
-// 단 함수일 경우, 함수선언식에서 {}안에 함수를 선언 할 경우 그 함수는 지역스코프이지만, if, for문 안에 선언된 함수는 지역 스코프를 갖지 않는다.
+printData();

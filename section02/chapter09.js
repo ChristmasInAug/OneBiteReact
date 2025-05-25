@@ -1,64 +1,73 @@
-// 조건문
-/*
-- 특정 조건을 만족 했을 때에만 실행되는 코드를 작성하기 위한 문법
-- 대표적으로 if, switch 조건문이 존재함.
-*/
+// 배열 메서드 3. 변형
 
-// 1. if 조건문(if문)
-let num = 4;
-if(num >= 10) {
-    console.log("num은 10 이상입니다");
-}
-else if(num >= 5){
-    console.log("num은 5 이상입니다.")
-}
-else if(num >= 3){
-    console.log("num은 3 이상입니다.")
-}
+// 5가지 배열 변형 메서드
 
-else {
-    console.log("num은 2 이하 입니다.");
-}
-// '()'안에 조건식을 쓰고, '{}' 조건식이 만족 했을 때 수행할 코드를 작성.
-// if로 시작해서 else로 끝나야 한다.
-// else if()로 시작할 수 없고, else가 esle if 위에 있을 수 없다.
+// 1. filter
+// 기존 배열에서 조건을 만족하는 요소들만 필터링하여 새로운 배열로 반환
 
-// 커서를 두고 ctrl(command) + / 하면 주석 처리 됨.
+let arr1 = [
+    {name : "박정하", hobby : "테니스"},
+    {name : "김효빈", hobby : "테니스"},
+    {name : "홍길동", hobby : "독서"},
+];
 
-// 2. Switch 문
-// -> if문과 기능 자체는 동일
-// -> 다수의 조건을 처리할 때 if 보다 더 직관적.
+const tennisPeople = arr1.filter((item) => {
+    if(item.hobby === "테니스") 
+        return true;
+});
 
-let animal = "owl";
-// ()안에는 변수가 들어감.
-// switch는 case에서 일치하는 값이 나오면 그 아래 값들도 다 반환함. cat이면 그 아래 dog부터 tigher까지 다 반환해줌.
-// 딱 cat만 조회하고 싶으면 break;를 넣어야함.
-// 즉 switch문을 작성할 때는 break까지 함께 작성해줘야 함.
-switch(animal) {
-    case "cat": {
-        console.log("고양이")
-        break;
-    }
-    case "dog": {
-        console.log("개")
-        break;
-    }
-    case "bear": {
-        console.log("곰")
-        break;
-    }
-    case "snake": {
-        console.log("뱀")
-        break;
-    }
-    case "tigher": {
-        console.log("호랑이")
-        break;
-    }
-    default: {
-        console.log("그런 동물은 전 모릅니다.")
-    }
-    // 어떠한 케이스에도 해당 되지 않을 때 실행 할 코드는 default를 추가 하면 됨.
-    // if의 else같은 것.
-}
+console.log(tennisPeople);
+// {name : "박정하", hobby : "테니스"},
+// {name : "김효빈", hobby : "테니스"}, 출력 됨.
 
+// filter메서드는 웹서비스 개발 할 때 특정 조건에서 검색하는 기능이나 카테고리별 필터 기능을 만들 때 필수적으로 사용됨.
+
+// 2. map
+// 배열의 모든 요소를 순회하면서, 각각 콜백함수를 실행하고 그 결과값들을 모아서 새로운 배열로 반환.
+let arr2 = [1,2,3];
+const mapResult1 = arr2.map((item, idx, arr) => {
+    console.log(idx, item);
+    return item * 2;
+});
+console.log(mapResult1); // [2,4,6] 출력
+
+const names = arr1.map((item) => item.name );
+console.log(names);
+
+// 3. sort
+// 배열을 사전순으로 정렬하는 메서드
+let arr3 = ["b", "a", "c"];
+arr3.sort();
+console.log(arr3);//  [a,b,c] 출력
+// 숫자인 배열일 경운 sort는 작동하지 않는다. 
+// sort는 사전순으로 정렬하는 메서드. 숫자의 대소 비교가 아니다. 
+// 숫자의 대소관계로 정렬하고 싶으면 비교하는 콜백함수를 설정해줘야 한다.
+let arr3n = [10, 3, 5]
+arr3n.sort((a,b) => {
+    if (a>b) {
+        // b가 a 앞에 와라
+        return 1; // => b, a 배치
+    } else if (a<b) {
+        // a가 b 앞에 와라
+        return -1; // => a, b 배치
+    } else {
+        // 두 값의 자리를 바꾸지 마라
+        return 0; // a,b 자리를 그대로 유지
+    }
+});// 내림차순을 원하면 반대로 하면 됨.
+console.log(arr3n) // [3, 5, 10] 출력
+
+// 4. toSorted(최근에 추가된 최신 함수)
+// 배열을 정렬하는 메서드 sort는 원본 배열을 정렬하는 메서드
+// toSorted는 원본 배열은 그대로 두고 새로운 배열을 반환하는 메서드
+
+let arr5 = ["b", "a", "c"];
+const sotred = arr5.toSorted();
+console.log(arr5);
+console.log(sotred);
+
+// 5. join
+// 배열의 모든 요소를 하나의 문자열로 합쳐서 반환하는 메서드
+let arr6 = ["hi", "im", "winterlood"];
+const joined = arr6.join(); // join("-"), join(" ") 식으로 ','를 대체 가능
+console.log(joined); // hi,im,winterlood 출력

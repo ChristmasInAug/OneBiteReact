@@ -1,56 +1,61 @@
-// 함수 표현식과 화살표 함수
+// 비동기 작업 처리하기 1. 콜백 함수
 
-// 1. 함수 표현식
-function funcA() {
-    console.log("funcA 함수 호출");
+function task(){
+    setTimeout(() => {
+        console.log("안녕하세요.")
+    }, 1000);
 }
 
-let varA = funcA; // 함수를 호출하지 않고 함수 자체를 변수에 저장
-console.log(varA);
-// 함수 자체가 콘솔에 출력이 됨.
-// js은 함수도 숫자열과 문자열과 같이 하나의 값으로 취급.
-varA();
+task();
 
-let varB = function funcB() {
-    console.log("funcB 호출");
+function add(a, b, callback){
+    setTimeout(() => { // 첫번째콜백함수
+        const sum = a + b;
+        callback(sum)
+    }, 3000);
 }
-// 현재 function funcB(){}은 선언식이 아니다. 선언식은 특정 변수에 값으로 담기지 않은 상태로 있어야 한다.
-// 값으로 함수가 생성 된 것. 그러므로 fucB()으로 함수를 호출 할 수 없다. 변수의 이름으로 불러야 한다.
-varB();
-//funcB(); // 에러가 발생함
 
-/*
-let varB = function() { // 익명함수
-    console.log("funcB 호출");
-}
-이렇게 함수 이름 없이 만들 수 있다. 이런 함수를 익명함수라고 한다.
-그리고 값으로서 함수를 만드는 것을 함수표현식이라고 한다.
-*/
-
-// 2. 화살표 함수
-// 화살표 함수는 함수를 이전보다 더 빠르고 간결하게 생성 할 수 있도록 도와주는 자바스크립트 문법
-
-let varX = function(){
-    return1;
-}
-// 기존의 함수 생성 방식
-
-let varC = () => {
-    return 1;
-}
-console.log(varC());
-
-// 바로 return을 반환해주는 경우에는 아래와 같이 작성 해도 된다.
-let varD = () => 1;
-console.log(varD());
-
-// 매개변수가 필요한 경우
-let varE = (value) => value + 1;
-console.log(varE(10)); 
-
-// 즉시 반환하는 것이 아닐 경우
-let varF = (value) => {
+add(1,2, (value) => { // 두번째 콜백함수
     console.log(value);
-    return value + 1;
-};
-console.log(varF(29));
+});
+// add 함수가 호출되면서 setTimeout함수가 호출이 된다. 이 setTimeout함수는 callback함수를 3초뒤에 실행한다.
+// 3초 뒤에 실행된 이 callback 함수(첫번째콜백함수)에서 sum이라는 값을 계산한 다음, 이 값이 지금 3인데 
+// 계산한 다음 매개변수로 받은 이 callback 함수를 다시 호출하면서 이 값을 전달해 주게 되기 때문에 setTimeout함수가 끝나고 났을 때
+// 이 callback 함수(두번째콜백함수)가 한번더 실행되면서 매개변수로 3이라는 값이 들어오게 되고, 그것이 콘솔에 출력이 되면서 개발자 도구의 콘솔에 3이 출력 됨
+
+
+// 음식을 주문하는 상황
+
+function orderFood(callback) {
+    setTimeout(() => {
+        const food = "떡볶이";
+        callback(food)
+    }, 3000);
+}
+
+function cooldownFood(food, callback) {
+    setTimeout(() => {
+        const cooldownedFood = `식은 ${food}`;
+        callback(cooldownedFood)
+    }, 2000);
+}
+function freezeFood(food, callback) {
+    setTimeout(() => {
+        const freezedFood = `냉동된 ${food}`;
+        callback(freezedFood)
+    }, 1500);
+}
+orderFood((food) => {
+    console.log(food);
+
+    cooldownFood(food, (cooldownedFood) => {
+        console.log(cooldownedFood);
+
+        freezeFood(cooldownedFood, (freezedFood) => {
+            console.log(freezedFood)
+        });
+    });
+});
+
+// 이렇게 콜백함수를 이용하다보면 코드가 들여쓰기 되는 부분이 더 많이 생기게 된다. 이런 것을 콜백지옥이라고도 부르는데
+// 피하기 위해 promise라는 비동기 작업를 도와주는 객체를 이용하면 된다. 

@@ -1,32 +1,41 @@
-// 반복문(Loop, Iteration)
-// 어떠한 동작을 반복해서 수행할 수 있도록 만들어 주는 문법
+// Date 객체와 날짜
 
-// for 
-// () 안에 초기식; 조건식; 증감식 순으로 작성
-// 초기식 : for문 내부에서만 이용 할 수 있는 특별한 변수를 초기화 하기 위해 사용하는 식, 
-//         이 변수는 보통은 몇번 반복하는지 카운트 하는 값을 저장하는 변수, count변수라고도 함.
-for(let idx = 1; idx <= 10; idx++) {
-    console.log(idx)
-}
+// 1. Date 객체를 생성하는 방법
+let date1 = new Date() // 생성자, 인수를 전달하지 않으면 현재지금시간을 생성
+console.log(date1); // Tue May 20 2025 04:47:28 GMT+0900 (한국 표준시) 출력
 
-// 조건식이 거짓이 되지 않더라도 중간에 강제로 종료하는 방법
-// 조건식이 아니더라도 중간에 강제로 종료해야하는 상황이라면 조건문과 함께 break를 이용
-for(let idx = 1; idx <= 10; idx++) {
-    console.log(idx)
-    if(idx >= 5){
-        break;
-    }
-}
+let date2 = new Date("1997-01-07/10:10:10"); // -, ., / 다 가능
+console.log(date2); // Tue Jan 07 1997 09:00:00 GMT+0900 (한국 표준시) 출력
 
-// 중간에 특정 회차를 건너뛰는 방법.
-// 짝수는 건너뛴다 할때,
-for(let idx = 1; idx <= 10; idx++) {
-    if(idx % 2 === 0) {
-        continue; // continue : 조건식이 참이 되면 다음코드는 실행되지 않고 다음 반복문으로 넘어가게 된다.
-                  // 여기선 2는 참이므로 넘어가고 3으로 넘어가게 됨.
-    }
-    console.log(idx)
-    if(idx >= 5){
-        break;
-    }
-}
+// 2. 타임 스탬프
+// 특정 시간이 "1970.01.01 00시 00분 00초(UTC)"로 부터 몇 ms가 지났는지를 의미하는 숫자값
+// 기준이 되는 시간을 UTC(협정세계시)라 함.
+
+let ts1 = date1.getTime();
+console.log(ts1);
+
+let date4 = new Date(ts1);
+console.log(date1, date4);
+
+// 3. 시간 요소들을 추출하는 방법
+let year = date1.getFullYear();
+let month = date1.getMonth()+1; // js에서 1월이 0으로 출력됨 그래서 +1을 해주는 것.
+let date = date1.getDate();
+let hour = date1.getHours();
+let minute = date1.getMinutes();
+let seconds = date1.getSeconds();
+
+console.log(year, month, date, hour, minute, seconds); //2025 5 20 4 56 34 출력
+
+// 4. 시간 수정하기
+date1.setFullYear(2023);
+date1.setMonth(2);
+date1.setDate(30);
+date1.setHours(23);
+date1.setMinutes(50);
+date1.setSeconds(55);
+console.log(date1);
+
+// 5. 시간을 여러 포맷으로 출력하기
+console.log(date1.toDateString()); // 시간제외하고 날짜만 출력 Thu Mar 30 2023
+console.log(date1.toLocaleString()); // 현지에 맞게 출력됨. 2023. 3. 30. 오후 11:50:55

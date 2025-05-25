@@ -1,44 +1,65 @@
-// 06. 형변환(Type Casting)
-/*
-어떤 값의 타입을 다른 타입으로 변경하는 것을 말함.
+// 반복문으로 배열과 객체 순회하기
+// 배열, 객체에 저장된 여러개의 값에 순서대로 하나씩 접근하는 것을 말함.
 
-묵시적 형 변환(암묵적 형변환)
-- 개발자가 직접 설정하지 않아도 알아서 자바스크립트 엔진이 형변환 하는 것을 말함
+// 1. 배열 순회
+let arr = [1, 2, 3];
 
-명시적 형 변환
-- 개발자가 직접 함수 등을 이용해 형 변환을 일으킴
-*/
+// 1-1. 배열 인덱스
+for (let i = 0; i<arr.length; i++){
+    console.log(arr[i]);
+}
+// length는 배열의 길이를 저장하는 프로퍼티
 
-// 1. 묵시적 형 변환
-// 자바스크립트 엔진이 알아서 형 변환 하는 것
+let arr2 = [4, 5, 6, 7, 8];
+for (let i = 0; i < arr2.length; i++){
+    console.log(arr2[i]);
+}
 
-let num = 10;
-let str = "20";
+// 1-2. for of 반복문
+// 오직 배열을 순회하기 위해서만 존재하는 특수한 반복문
+for(let item of arr){ // of 뒤에 있는 배열의 값을 하나씩 순서대로 꺼내와서 item에 저장함.
+    console.log(item);
+}
 
-const result = num + str;
-console.log(result);
-// num의 형이 묵시적으로 string으로 형변환이 되어 "10" + "20"이 되어 1020이 출력 됨.
+// 2. 객체 순회
+let person = {
+    name : "박정하",
+    age : 27,
+    hobby : "테니스"
+};
 
-// 2. 명시적 형 변환
-// 프로그래머 내장함수 등을 이용해서 직접 형 변환을 명시
-// 내장함수 : 자바스크립트가 기본적으로 제공하는 함수
-// 문자열 -> 숫자
-let str1 = "10";
-let strToNum1 = Number(str1);
-console.log(10+strToNum1);
+// 2-1. Object.keys 사용
+// 객체에서 key 값들만 뽑아서 새로운 배열로 변환
 
-let str2 = "10개";
-let strToNum2 = Number(str2);
-console.log(strToNum2); // NaN 출력. 수치 연산 실패 , parseInt사용 하면 가능
-let strToNum20 = parseInt(str2);
-console.log(strToNum20); // 10 출력 됨.
+let keys = Object.keys(person);
+console.log(keys);
+for(let i = 0; i < keys.length; i++){
+    console.log(keys[i]);
+};
 
-// 숫자 -> 문자 형 변환
-let num1 = 20;
-let numToStr1 = String(num1);
-console.log(numToStr1 + "입니다");
+for(let item of keys){
+    console.log(item)
+}
 
+for(let item of keys){
+    console.log(item, person[item]);
+}
 
+// 2-2. Object.values 사용
+// 객체에서 value 값들만 뽑아서 새로운 배열로 반환
 
+let values = Object.values(person);
+console.log(values);
 
+for(let value of values){
+    console.log(value);
+}
 
+// 2-3. for in
+// for of와 비슷
+for(let key in person) {// person 객체의 프로퍼티의 키를 key라는 변수에 할당.
+    const value = person[key];
+    console.log(key, value);
+}
+
+// for of는 배열에만, for in은 객체에서만 사용 가능. 
